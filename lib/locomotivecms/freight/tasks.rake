@@ -16,7 +16,7 @@ namespace :wp do
     %w(posts comments).each do |template_name|
       template_file = "#{template_name}.yml"
       template = File.read(File.join template_dir, "#{template_file}.erb")
-      renderer = ERB.new posts_template
+      renderer = ERB.new template
       File.open("app/content_types/#{template_file}", 'w') do |fh|
         fh.write renderer.result(binding)
       end
