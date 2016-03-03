@@ -1,10 +1,10 @@
 # Locomotivecms::Freight
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/locomotivecms/freight`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Imports posts, comments and images from any WordPress site.  Rewrites image tags and internal links.
 
 ## Installation
+
+This gem adds rake tasks to a LocomotiveCMS Wagon-generated project directory.
 
 Add this line to your application's Gemfile:
 
@@ -20,9 +20,49 @@ Or install it yourself as:
 
     $ gem install locomotivecms-freight
 
+Finally, place this somewhere in your project's Rakefile:
+
+```ruby
+require 'locomotivecms/freight/tasks'
+```
+
 ## Usage
 
-TODO: Write usage instructions here
+First, on your WordPress site, log in as an admin user, and navigate to Tools -> Export.  Select
+"All content" and click "Download Export File".  Save the file and remember the location.
+
+Next (TODO, not yet implemented) install the LocomotiveCMS content_types needed for WordPress posts and
+comments:
+
+    bundle exec rake wp:install_content_types FORMAT=markdown
+
+This task does not exist yet.  Format controls which editor will be used for the body of each post; it
+can be one of `html` or `markdown` (defaults to `html`).  Note that the WordPress export file may contain
+HTML.  If `markdown` is chosen, each post's body will be converted markdown.
+
+To import all posts, comments and images from a WordPress site, run the following command:
+
+    bundle exec rake wp:import TARGET=production XML=/path/to/my-wordpress-export.xml
+
+Note that `TARGET` should reference one of the environments defined in your `config/deploy.yml` file.
+Also be aware that image importing will not work unless the WordPress site from which you are exporting
+is up and operational.  This is because the XML export file from a WordPress site contains pages, posts
+and comments, but not other file resources such as images, audio/video files etc.
+
+Also be aware that as of this writing, Freight's only concern is with posts and comments; it ignores
+pages.
+
+If there were images downloaded then you will need to push them up to your target LocomotiveCMS engine:
+
+    bundle exec wagon sync production
+
+To remove all _imported_ posts and associated comments, run this:
+
+    bundle exec rake wp:clean TARGET=production
+
+And finally, to remove all imported posts and associated comments and then re-import, do this:
+
+    bundle exec rake wp:reload TARGET=production XML=/path/to/my-wordpress-export.xml
 
 ## Development
 
@@ -32,7 +72,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/locomotivecms-freight.
+Bug reports and pull requests are welcome on GitHub at https://github.com/joelhelbling/locomotivecms-freight.
 
 
 ## License
