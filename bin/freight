@@ -1,0 +1,14 @@
+#!/usr/bin/env ruby
+
+require File.expand_path(File.join File.dirname(__FILE__), '..', 'lib', 'locomotivecms', 'freight')
+
+wp_export = ARGV[0]
+
+puts <<-SORRY
+So sorry, but this script is not yet functional.  For now, if you'll just add
+
+require 'locomotivecms/freight/tasks'
+
+to your wagon project's Rakefile, you should get a slew of useful tasks for importing
+from a WordPress site.
+SORRY
