@@ -31,16 +31,17 @@ require 'locomotivecms/freight/tasks'
 First, on your WordPress site, log in as an admin user, and navigate to Tools -> Export.  Select
 "All content" and click "Download Export File".  Save the file and remember the location.
 
-Next (TODO, not yet implemented) install the LocomotiveCMS content_types needed for WordPress posts and
-comments:
+Next, install the LocomotiveCMS content_types needed for WordPress posts and comments:
 
-    bundle exec rake wp:install_content_types FORMAT=markdown
+    bundle exec rake wp:install_content_types
 
-This task does not exist yet.  Format controls which editor will be used for the body of each post; it
-can be one of `html` or `markdown` (defaults to `html`).  Note that the WordPress export file may contain
-HTML.  If `markdown` is chosen, each post's body will be converted markdown.
+Each post's body will be converted to markdown.  After this step, you will need to push the new
+content types to each engine to which you will be deploying:
 
-To import all posts, comments and images from a WordPress site, run the following command:
+    bundle exec wagon sync production -v -r content_types
+
+Now that we have the necessary content_types to receive them, we can import all posts, comments and
+images from a WordPress site, run the following command:
 
     bundle exec rake wp:import TARGET=production XML=/path/to/my-wordpress-export.xml
 
@@ -54,7 +55,7 @@ pages.
 
 If there were images downloaded then you will need to push them up to your target LocomotiveCMS engine:
 
-    bundle exec wagon sync production
+    bundle exec wagon sync production -v
 
 To remove all _imported_ posts and associated comments, run this:
 

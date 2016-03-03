@@ -1,0 +1,67 @@
+name: Comments
+slug: comments
+description: Comments on blog posts
+label_field_name: email
+order_by: created_at
+order_direction: asc
+
+# Activate public 'create' API (e.g for a contact form)
+# public_submission_enabled: false
+
+# Array of emails to be notified of new entries made with the public API
+# public_submission_accounts: ['john@example.com']
+
+# Control the display of the content type in the back-office.
+# display_settings:
+#   seo: false              # display the SEO tab for the content entries
+#   advanced: false         # display the Advanced tab for the content entries
+#   position: 1             # position in the sidebar menu
+#   hidden: false           # hidden for authors?
+
+entry_template: |
+  <a href={{ link }}>{{ entry.name }} &lt;{{  entry._label }}&gt;</a>
+  [ {{ entry.commented_at }} ]<br>
+  {{ entry.content }}
+
+fields:
+- name:
+    label: Name
+    type: string
+    required: false
+    hint: the huumon who made the wisecrack
+    localized: false
+
+- email:
+    label: Email
+    type: string
+    required: false
+    hint: commenter's email address
+    localized: false
+
+- url:
+    label: Url
+    type: string
+    required: false
+    hint: the commenter's (optional) homepage url
+    localized: false
+
+- commented_at:
+    label: Commented at
+    type: date_time
+    required: true
+    hint: when what was said, was said, exactly
+    localized: false
+
+- content:
+    label: Comment
+    type: text
+    required: true
+    hint: Explanatory text displayed in the back office
+    localized: false
+    text_formatting: html
+
+- post:
+    label: Post
+    hint: The blog post this comment was commenting on
+    type: belongs_to
+    class_name: posts

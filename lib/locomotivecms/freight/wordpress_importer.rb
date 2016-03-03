@@ -59,7 +59,7 @@ module Locomotivecms
         end.flatten
       end
 
-      def import import_file
+      def import import_file, format=html
         metrics = OpenStruct.new posts: 0, comments: 0
         parse_all_posts(import_file).each do |item|
 
