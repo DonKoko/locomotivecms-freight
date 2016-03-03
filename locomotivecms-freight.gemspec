@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Joel Helbling"]
   spec.email         = ["joel@joelhelbling.com"]
 
-  spec.summary       = %q{Loads WordPress content into LocomotiveCMS.}
-  spec.description   = %q{Specifically posts, comments and images.  Rewrites images and internal links.}
+  spec.summary       = %q{Imports WordPress content into LocomotiveCMS.}
+  spec.description   = %q{Imports posts, comments and images from a WordPress site.  Rewrites images and internal links.}
   spec.homepage      = "https://github.com/joelhelbling/locomotivecms-freight"
   spec.license       = "MIT"
 
