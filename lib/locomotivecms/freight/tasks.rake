@@ -67,7 +67,7 @@ namespace :wp do
   end
 
   task importer: :client do
-    @importer = WordpressImporter.new @client
+    @importer = Locomotivecms::Freight::WordpressImporter.new @client
   end
 
   task client: :config do
